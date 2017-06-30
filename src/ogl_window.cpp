@@ -4,6 +4,7 @@
 #include "glad/glad.h"
 #include <cstdio>
 #include "GLFW/glfw3.h"
+#include "input.h"
 
 void create_window(int width, int height, const char* name) {
     if (!glfwInit())
@@ -13,7 +14,7 @@ void create_window(int width, int height, const char* name) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    auto window = glfwCreateWindow(width, height, name, nullptr, nullptr);
+    struct GLFWwindow* window = glfwCreateWindow(width, height, name, nullptr, nullptr);
 
     if (!window)
         exit(2);
@@ -26,14 +27,18 @@ void create_window(int width, int height, const char* name) {
     printf("OpenGL Version %d.%d loaded", GLVersion.major, GLVersion.minor);
 
     register_callbacks(window);
+
     game_loop(window);
 
-    glfwDestroyWindow(window);
+    glfwTerminate();
 }
 
 static void game_loop(struct GLFWwindow* window) {
     while (!glfwWindowShouldClose(window)) {
-        // stuff
+        process_input(window);
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
     }
 }
 
