@@ -1,17 +1,8 @@
 #pragma once
 
-#define GLFW_INCLUDE_NONE
+void create_window(int width, int height, const char* name);
+void game_loop(struct GLFWwindow* window);
 
-#include <GLFW/glfw3.h>
-#include <string>
+void register_callbacks(struct GLFWwindow* window);
 
-class OGLWindow {
-public:
-    OGLWindow(int width, int height, std::string name);
-    ~OGLWindow();
-
-private:
-    void startLoop();
-
-    struct GLFWwindow* window;
-};
+void framebuffer_size_callback(struct GLFWwindow* window, int width, int height);
